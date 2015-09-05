@@ -43,7 +43,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		
 		spaceshipMesh.setVertices(data.meshes.get(0).vertices);
 		spaceshipMesh.setIndices(data.meshes.get(0).parts[0].indices);
-		spaceshipMesh.transform(new Matrix4().translate(0, 0, -5f));
+		spaceshipMesh.transform(new Matrix4().translate(0, 0, 0));
 
 		float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -63,12 +63,14 @@ public class MyGdxGame extends ApplicationAdapter {
 //		spaceshipMesh.transform(new Matrix4().translate(0, 0, -0.05f));
 		//img.bind();
 		shaderProgram.begin();
-		Light directional_light = new DirectionalLight(1, 1, 0);
-		directional_light.color(1, 1, 1);
+		Light directional_light = new DirectionalLight(1, 1, 0).color(1, 1, 1).specularColor(1, 1, 1).intensity(1.0f);
 		float[] light = directional_light.toArray();
 		float[] light_color = directional_light.colorArray();
+		float[] specular_color = directional_light.specularColorArray();
 		shaderProgram.setUniform3fv("light_direction", light, 0, 3);
 		shaderProgram.setUniform4fv("l_ambient", light_color, 0, 4);
+		shaderProgram.setUniform4fv("specular_color", specular_color, 0, 4);
+		shaderProgram.setUniformf("l_intensity", directional_light.intensity());
 		//System.out.println(shaderProgram.getLog());
 		shaderProgram.setUniformMatrix("u_worldView", cam.getCombinedMatrix()); //aca trabajar
 		//shaderProgram.setUniformi("u_texture", 0);

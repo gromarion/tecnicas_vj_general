@@ -11,7 +11,6 @@ varying vec3 v_normal;
 void main()
 {
 	v_normal = a_normal;
-    //v_color = vec4(1, 1, 1, 1);
     v_color = l_ambient;
     //v_texCoords = a_texCoord0;
     gl_Position = u_worldView * a_position;
