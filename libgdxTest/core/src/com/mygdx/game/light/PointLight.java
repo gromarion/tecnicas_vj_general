@@ -11,7 +11,7 @@ public class PointLight extends Light {
 		this.inner_radius = inner_radius;
 	}
 	
-	public Light position(float x, float y, float z) {
+	public PointLight position(float x, float y, float z) {
 		position = new Vector3(x, y, z);
 		return this;
 	}
