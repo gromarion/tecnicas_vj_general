@@ -25,13 +25,23 @@ public class MyGdxGame extends ApplicationAdapter {
 	ShaderProgram shaderProgram;
 	private Camera cam;
 	private EventSystem eventSystem;
+	Light directional_light;
+	private float[] light, light_color, specular_color;
+	String vertexShaderPath = "shaders/defaultVS.glsl";
+	String fragmentShaderPath = "shaders/DirectionalLightFS.glsl";
 	
 	@Override
 	public void create () {
 		// img = new Texture(Gdx.files.internal("ship.png"));
-		String vs = Gdx.files.internal("shaders/defaultVS.glsl").readString();
-		String fs = Gdx.files.internal("shaders/defaultFS.glsl").readString();
+		String vs = Gdx.files.internal(vertexShaderPath).readString();
+		String fs = Gdx.files.internal(fragmentShaderPath).readString();
 		shaderProgram = new ShaderProgram(vs, fs);
+		// == When lights are capable of moving, this code should be pasted in the render() method ==
+		directional_light = new DirectionalLight(1, 1, 0).color(1, 1, 1).specularColor(1, 1, 1).intensity(1.0f);
+		light = directional_light.toArray();
+		light_color = directional_light.colorArray();
+		specular_color = directional_light.specularColorArray();
+		// == When lights are capable of moving, this code should be pasted in the render() method ==
 		System.out.println(shaderProgram.getLog());
 		ModelLoader<?> loader = new ObjLoader();
 		//ModelData data = loader.loadModelData(Gdx.files.internal("ship.obj"));
@@ -43,7 +53,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		
 		spaceshipMesh.setVertices(data.meshes.get(0).vertices);
 		spaceshipMesh.setIndices(data.meshes.get(0).parts[0].indices);
-		spaceshipMesh.transform(new Matrix4().translate(0, 0, 0));
+		spaceshipMesh.transform(new Matrix4().translate(0, -0.25f, -3));
 
 		float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -60,18 +70,13 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.graphics.getGL20().glEnable(GL20.GL_DEPTH_TEST); 	
 		Gdx.gl20.glDepthFunc(GL20.GL_LESS);
 		Gdx.graphics.getGL20().glEnable(GL20.GL_TEXTURE_2D);
-//		spaceshipMesh.transform(new Matrix4().translate(0, 0, -0.05f));
+		// spaceshipMesh.transform(new Matrix4().translate(0, 0, -0.05f));
 		//img.bind();
 		shaderProgram.begin();
-		Light directional_light = new DirectionalLight(1, 1, 0).color(1, 1, 1).specularColor(1, 1, 1).intensity(1.0f);
-		float[] light = directional_light.toArray();
-		float[] light_color = directional_light.colorArray();
-		float[] specular_color = directional_light.specularColorArray();
 		shaderProgram.setUniform3fv("light_direction", light, 0, 3);
 		shaderProgram.setUniform4fv("l_ambient", light_color, 0, 4);
 		shaderProgram.setUniform4fv("specular_color", specular_color, 0, 4);
 		shaderProgram.setUniformf("l_intensity", directional_light.intensity());
-		//System.out.println(shaderProgram.getLog());
 		shaderProgram.setUniformMatrix("u_worldView", cam.getCombinedMatrix()); //aca trabajar
 		//shaderProgram.setUniformi("u_texture", 0);
 		spaceshipMesh.render(shaderProgram, GL20.GL_TRIANGLES);
