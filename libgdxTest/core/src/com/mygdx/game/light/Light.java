@@ -3,11 +3,11 @@ package com.mygdx.game.light;
 import com.badlogic.gdx.math.Vector3;
 
 public class Light {
-	Vector3 direction;
 	float r, g, b, a, spec_r, spec_g, spec_b, spec_a, intensity;
+	private Vector3 position;
 	
 	public Light(float x, float y, float z) {
-		direction = new Vector3(x, y, z);
+		position = new Vector3(x, y, z);
 		r = g = b = spec_r = spec_g = spec_b = 0;
 		a = spec_a = intensity = 1;
 	}
@@ -39,8 +39,13 @@ public class Light {
 		return this;
 	}
 	
-	public float[] toArray() {
-		return new float[] {direction.x, direction.y, direction.z};
+	public Vector3 position() {
+		return position;
+	}
+	
+	public Light position(float x, float y, float z) {
+		position = new Vector3(x, y, z);
+		return this;
 	}
 
 	public float[] colorArray() {

@@ -26,11 +26,12 @@ public class MyGdxGame extends ApplicationAdapter {
 	private ShaderProgram shaderProgram;
 	private Camera cam;
 	private EventSystem eventSystem;
-	private Light directional_light;
+	private DirectionalLight directional_light;
 	private PointLight point_light;
 	private float[] light, light_color, specular_color;
 	private String vertexShaderPath = "shaders/defaultVS.glsl";
 	private String fragmentShaderPath = "shaders/PointLightFS.glsl";
+	//private String fragmentShaderPath = "shaders/DirectionalLightFS.glsl";
 	
 	@Override
 	public void create () {
@@ -39,8 +40,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		String fs = Gdx.files.internal(fragmentShaderPath).readString();
 		shaderProgram = new ShaderProgram(vs, fs);
 		// == When lights are capable of moving, this code should be pasted in the render() method ==
-		directional_light = new DirectionalLight(1, 1, 0).color(1, 1, 1).specularColor(1, 1, 1).intensity(1.0f);
-		point_light = ((PointLight) new PointLight(1, 1, 0, 400.0f).color(1, 1, 1).specularColor(1, 1, 1).intensity(1.0f)).position(0, 0, 0);
+		directional_light = (DirectionalLight) new DirectionalLight(1, 1, 0).color(1, 1, 1).specularColor(1, 1, 1).intensity(1.0f);
+		point_light = (PointLight) new PointLight(0, 0, 0, 5f).color(1, 1, 1).specularColor(1, 1, 1).intensity(1.0f);
 		light = directional_light.toArray();
 		light_color = directional_light.colorArray();
 		specular_color = directional_light.specularColorArray();
@@ -76,12 +77,13 @@ public class MyGdxGame extends ApplicationAdapter {
 		// spaceshipMesh.transform(new Matrix4().translate(0, 0, -0.05f));
 		//img.bind();
 		shaderProgram.begin();
-		shaderProgram.setUniform3fv("l_direction", light, 0, 3);
+		//shaderProgram.setUniform3fv("l_direction", light, 0, 3);
 		shaderProgram.setUniform4fv("l_ambient", light_color, 0, 4);
 		shaderProgram.setUniform4fv("specular_color", specular_color, 0, 4);
-		shaderProgram.setUniformf("l_intensity", directional_light.intensity());
+		shaderProgram.setUniformf("l_intensity", point_light.intensity());
 		// deberiamos determinar con un if que cosas setear segun el tipo de luz.
 		shaderProgram.setUniformf("l_radius", point_light.innerRadius());
+		shaderProgram.setUniformf("l_position", point_light.position());
 		
 		shaderProgram.setUniformMatrix("u_worldView", cam.getCombinedMatrix()); //aca trabajar
 		//shaderProgram.setUniformi("u_texture", 0);

@@ -1,6 +1,6 @@
 varying vec4 v_color; 
 varying vec3 v_normal;
-uniform vec3 light_direction;
+uniform vec3 l_direction;
 uniform vec4 specular_color;
 uniform float l_intensity;
 
@@ -15,7 +15,7 @@ void main() {
 	vec3 half_vector;
 	vec4 diffuse;
 	vec4 specular = vec4(0,0,0,1);
-	vec3 light_dir = normalize(light_direction);
+	vec3 light_dir = normalize(l_direction);
 	
 	n_dot_l = max(dot(v_normal, light_dir), 0.0);
 	if (n_dot_l > 0.0) {
