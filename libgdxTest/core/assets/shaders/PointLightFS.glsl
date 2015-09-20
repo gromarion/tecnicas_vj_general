@@ -13,7 +13,7 @@ uniform float l_radius;
 void main() {
 	float n_dot_l;
 	float n_dot_hv;
-	float shinyness = 1.0;
+	float shinyness = 0.5;
 	float dist;
 	vec3 half_vector;
 	vec4 diffuse;
