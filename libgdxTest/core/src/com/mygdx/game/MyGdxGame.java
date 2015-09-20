@@ -29,9 +29,6 @@ public class MyGdxGame extends ApplicationAdapter {
 	private EventSystem eventSystem;
 	private DirectionalLight directionalLight;
 	private PointLight pointLight;
-	private float[] light, light_color, specular_color;
-	private String vertexShaderPath = "shaders/defaultVS.glsl";
-	private String fragmentShaderPath = "shaders/PointLightFS.glsl";
 	
 	@Override
 	public void create () {
