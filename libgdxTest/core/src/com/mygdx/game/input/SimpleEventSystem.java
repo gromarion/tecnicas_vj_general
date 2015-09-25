@@ -5,7 +5,7 @@ import com.mygdx.game.camera.Camera;
 
 public class SimpleEventSystem implements EventSystem {
 	
-	private static final float translationSpeed = .5f;
+	private static final float translationSpeed = .1f;
 	
 	private final Camera camera;
 	private final InputHandler keyboardInputHandler;
