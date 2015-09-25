@@ -1,6 +1,7 @@
 package com.mygdx.game.camera;
 
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 
 public interface Camera {
 	
@@ -18,5 +19,7 @@ public interface Camera {
 	public void setFar(final float far);
 	public float getNear();
 	public float getFar();
+	public Vector3 getPosition();
+	public void position(float x, float y, float z);
 
 }

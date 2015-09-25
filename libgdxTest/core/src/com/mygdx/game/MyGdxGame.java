@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.model.data.ModelData;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.camera.Camera;
 import com.mygdx.game.camera.PerspectiveCamera;
 import com.mygdx.game.input.EventSystem;
@@ -34,9 +35,10 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void create () {
 		// img = new Texture(Gdx.files.internal("ship.png"));
 		// == When lights are capable of moving, this code should be pasted in the render() method ==
-		directionalLight = (DirectionalLight) new DirectionalLight(1, 1, 0).color(1, 1, 1).specularColor(1, 1, 1).intensity(1.0f);
-		pointLight = (PointLight) new PointLight(0, -0.25f, -3, 10f).color(1, 1, 1).specularColor(1, 1, 1).intensity(0.25f);
+		directionalLight = (DirectionalLight) new DirectionalLight(1, 1, 0).color(1, 1, 1).specularColor(1, 0, 0).intensity(1.0f);
+		pointLight = (PointLight) new PointLight(0, -0.25f, -3, 10f).color(1, 1, 1).specularColor(1, 1, 1).intensity(0.15f);
 		shaderProgram = new PointLightShaderProgram(pointLight);
+		//shaderProgram = new DirectionalLightShaderProgram(directionalLight);
 
 		System.out.println(shaderProgram.getLog());
 		ModelLoader<?> loader = new ObjLoader();
@@ -69,6 +71,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		// spaceshipMesh.transform(new Matrix4().translate(0, 0, -0.05f));
 		//img.bind();
 		shaderProgram.begin();
+		float[] values = cam.getProjectionMatrix().getValues();
+		//shaderProgram.setUniform3fv("cam_position", new float[] {values[3], values[7], values[11], values[15]}, 0, 3);
+		Vector3 cam_position = cam.getPosition();
+		shaderProgram.setUniform3fv("cam_position", new float[] {cam_position.x, cam_position.y, cam_position.z}, 0, 3);
 		((LightShaderProgram) shaderProgram).setup();
 		
 		shaderProgram.setUniformMatrix("u_worldView", cam.getCombinedMatrix()); //aca trabajar

@@ -1,6 +1,7 @@
 package com.mygdx.game.camera;
 
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 
 public abstract class AbstractCamera implements Camera {
 
@@ -13,6 +14,7 @@ public abstract class AbstractCamera implements Camera {
 
 	private float near = 0.3f;
 	private float far = 100;
+	private Vector3 position = new Vector3(0, 0, 0);
 
 	@Override
 	public void update() {
@@ -26,6 +28,15 @@ public abstract class AbstractCamera implements Camera {
 			this.view.mul(view.inv());
 			updateCombinedMatrix();
 		}
+	}
+	
+	@Override
+	public Vector3 getPosition() {
+		return position;
+	}
+	
+	public void position(float x, float y, float z) {
+		position = new Vector3(position.x + x, position.y + y, position.z + z);
 	}
 
 	@Override

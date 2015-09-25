@@ -1,6 +1,7 @@
 package com.mygdx.game.input;
 
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.camera.Camera;
 
 public class SimpleEventSystem implements EventSystem {
@@ -16,7 +17,9 @@ public class SimpleEventSystem implements EventSystem {
 	}
 	
 	public void handleInput() {
-		Matrix4 translation = this.keyboardInputHandler.handleInput();
+		Vector3 vector = this.keyboardInputHandler.handleInput();
+		Matrix4 translation = new Matrix4().translate(vector.x, vector.y, vector.z);
+		camera.position(vector.x, vector.y, vector.z);
 		camera.transform(translation);
 	}
 }

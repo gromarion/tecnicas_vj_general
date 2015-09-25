@@ -3,6 +3,7 @@ package com.mygdx.game.input;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 
 public class TranslationInputHandler implements InputHandler {
 
@@ -21,7 +22,7 @@ public class TranslationInputHandler implements InputHandler {
 	
 	
 	@Override
-	public Matrix4 handleInput() {
+	public Vector3 handleInput() {
 		Matrix4 transform = new Matrix4();
 		float x = 0, y = 0, z = 0;
 		if (Gdx.input.isKeyPressed(KEYBOARD_W)) {
@@ -42,7 +43,8 @@ public class TranslationInputHandler implements InputHandler {
 		if (Gdx.input.isKeyPressed(KEYBOARD_E)) {
 			y += translationSpeed;
 		}
-		return transform.translate(x, y, z);
+		return new Vector3(x, y, z); 
+		//return transform.translate(x, y, z);
 	}
 
 }

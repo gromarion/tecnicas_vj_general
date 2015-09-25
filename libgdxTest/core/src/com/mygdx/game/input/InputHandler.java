@@ -1,9 +1,9 @@
 package com.mygdx.game.input;
 
-import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 
 public interface InputHandler {
 
-	public Matrix4 handleInput();
+	public Vector3 handleInput();
 	
 }
