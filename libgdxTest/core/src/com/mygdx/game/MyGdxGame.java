@@ -35,7 +35,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		// img = new Texture(Gdx.files.internal("ship.png"));
 		// == When lights are capable of moving, this code should be pasted in the render() method ==
 		directionalLight = (DirectionalLight) new DirectionalLight(1, 1, 0).color(1, 1, 1).specularColor(1, 1, 1).intensity(1.0f);
-		pointLight = (PointLight) new PointLight(0, -0.25f, -3, 5f).color(1, 1, 1).specularColor(1, 1, 1).intensity(0.25f);
+		pointLight = (PointLight) new PointLight(0, -0.25f, -3, 10f).color(1, 1, 1).specularColor(1, 1, 1).intensity(0.25f);
 		shaderProgram = new PointLightShaderProgram(pointLight);
 
 		System.out.println(shaderProgram.getLog());

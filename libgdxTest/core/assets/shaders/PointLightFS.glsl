@@ -20,19 +20,21 @@ void main() {
 	vec4 specular = vec4(0,0,0,1);
 	vec3 light_pos = l_position;
 	
-	vec3 a = normalize(light_pos - v_position);
+	vec3 position = normalize(light_pos - v_position);
+	float maru_intensity = l_intensity * max(0.0, (l_radius - length(light_pos - v_position)));
 	dist = length(vec3(light_pos - v_position));
 	
 	if (dist <= l_radius) {
-		n_dot_l = max(dot(v_normal, a), 0.0);
+		n_dot_l = max(dot(v_normal, position), 0.0);
 	
 		if (n_dot_l > 0.0) {
-			half_vector = normalize(a + v_position);
+			half_vector = normalize(position + v_position);
 			n_dot_hv = max(dot(v_normal, half_vector), 0.0);
 			specular = pow(n_dot_hv, shinyness) * specular_color;
 		}
 	    diffuse = n_dot_l * v_color;
-	    gl_FragColor = l_intensity * diffuse + specular;
+	    gl_FragColor = maru_intensity * diffuse + specular;
+	    //gl_FragColor = maru_intensity * diffuse;
 	} else {
 		gl_FragColor = vec4(0,0,0,1);
 	}
