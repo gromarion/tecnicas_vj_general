@@ -8,8 +8,7 @@ uniform mat4 camera_view;
 varying vec3 v_normal;
 void main()
 {
-	v_normal = a_normal;
     //v_texCoords = a_texCoord0;
     gl_Position = u_worldView * a_position;
-    v_normal = (u_worldView * vec4(a_normal.xyz, 0.0)).xyz;
+    v_normal = normalize((u_worldView * vec4(a_normal, 0.0)).xyz);
 }
