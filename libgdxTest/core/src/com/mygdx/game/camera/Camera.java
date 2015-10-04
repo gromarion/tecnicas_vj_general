@@ -21,5 +21,5 @@ public interface Camera {
 	public float getFar();
 	public Vector3 getPosition();
 	public void position(float x, float y, float z);
-
+	public void rotate(Vector3 axis, float degrees);
 }

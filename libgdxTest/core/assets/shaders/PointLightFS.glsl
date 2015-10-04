@@ -1,4 +1,3 @@
-varying vec4 v_color; 
 varying vec3 v_normal;
 varying vec3 v_position;
 uniform vec4 specular_color;
@@ -6,6 +5,7 @@ uniform float l_intensity;
 uniform vec3 l_position;
 uniform float l_radius;
 uniform vec3 cam_position;
+uniform vec4 l_ambient;
 
 // Illumination from right == x = 1.0
 // '' left == x = -1.0
@@ -35,7 +35,7 @@ void main() {
 			n_dot_hv = max(dot(v_normal, half_vector), 0.0);
 			specular = pow(n_dot_hv, shinyness) * specular_color;
 		}
-	    diffuse = n_dot_l * v_color;
+	    diffuse = n_dot_l * l_ambient;;
 	    gl_FragColor = relative_intensity * (diffuse + specular);
 	    //gl_FragColor = relative_intensity * diffuse;
 	} else {

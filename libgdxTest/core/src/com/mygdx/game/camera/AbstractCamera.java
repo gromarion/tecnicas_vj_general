@@ -15,9 +15,14 @@ public abstract class AbstractCamera implements Camera {
 	private float near = 0.3f;
 	private float far = 100;
 	private Vector3 position = new Vector3(0, 0, 0);
+	private Vector3 lookAt = new Vector3();
+	private final Vector3 direction = new Vector3(0, 0, -1);
+	private final Vector3 up = new Vector3(0, 1, 0);
+	private Vector3 tmp = new Vector3();
 
 	@Override
 	public void update() {
+		view.setToLookAt(position, tmp.set(position).add(direction), up);
 		updateProjectionMatrix();
 		updateCombinedMatrix();
 	}
@@ -26,6 +31,8 @@ public abstract class AbstractCamera implements Camera {
 	public void transform(final Matrix4 view) {
 		if (view != null) {
 			this.view.mul(view.inv());
+			direction.rot(view);
+			up.rot(view);
 			updateCombinedMatrix();
 		}
 	}
@@ -33,6 +40,12 @@ public abstract class AbstractCamera implements Camera {
 	@Override
 	public Vector3 getPosition() {
 		return position;
+	}
+	
+	@Override
+	public void rotate(Vector3 axis, float degrees) {
+		direction.rotate(axis, degrees);
+		up.rotate(axis, degrees);
 	}
 	
 	public void position(float x, float y, float z) {

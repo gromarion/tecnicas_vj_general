@@ -3,6 +3,7 @@ varying vec3 v_normal;
 uniform vec3 l_direction;
 uniform vec4 specular_color;
 uniform float l_intensity;
+uniform vec4 l_ambient;
 
 // Illumination from right == x = 1.0
 // '' left == x = -1.0
@@ -11,7 +12,7 @@ uniform float l_intensity;
 void main() {
 	float n_dot_l;
 	float n_dot_hv;
-	float shinyness = 2.0;
+	float shinyness = 25.0;
 	vec3 half_vector;
 	vec4 diffuse;
 	vec4 specular = vec4(0,0,0,1);
@@ -22,7 +23,8 @@ void main() {
 		half_vector = normalize(light_dir + gl_FragCoord.xyz);
 		n_dot_hv = max(dot(v_normal, half_vector), 0.0);
 		specular = pow(n_dot_hv, shinyness) * specular_color;
+		specular = clamp(specular, 0.0, 1.0);
 	}
-    diffuse = n_dot_l * v_color;
-    gl_FragColor = l_intensity * diffuse + specular;
+    diffuse = n_dot_l * l_ambient;
+    gl_FragColor = l_intensity * (diffuse + specular);
 }
