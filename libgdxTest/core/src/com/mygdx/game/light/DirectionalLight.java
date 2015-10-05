@@ -13,4 +13,12 @@ public class DirectionalLight extends Light {
 	public float[] toArray() {
 		return new float[] { direction.x, direction.y, direction.z };
 	}
+	
+	public Vector3 direction () {
+		return direction;
+	}
+	
+	public void direction(Vector3 direction) {
+		this.direction = direction;
+	}
 }

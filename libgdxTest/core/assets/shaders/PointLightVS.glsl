@@ -14,5 +14,5 @@ void main()
     //v_texCoords = a_texCoord0;
     gl_Position = u_worldView * a_position;
     v_normal = normalize((u_worldView * vec4(a_normal.xyz, 0.0)).xyz);
-    v_position = gl_Position.xyz / gl_Position.w;
+    v_position = gl_Position.xyz;
 }
