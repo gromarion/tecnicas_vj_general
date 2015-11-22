@@ -91,6 +91,6 @@ public abstract class AbstractCamera implements Camera {
 
 	protected void updateCombinedMatrix() {
 		combined.set(getProjectionMatrix()).mul(view);
-		System.out.println(combined);
+		//System.out.println(combined);
 	}
 }

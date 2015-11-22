@@ -1,8 +1,9 @@
 package com.mygdx.game.input;
 
+import java.net.Socket;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
@@ -28,29 +29,48 @@ public class TranslationInputHandler implements InputHandler {
 	}
 	
 	@Override
-	public void handleInput() {
-		Matrix4 transform = new Matrix4();
+	public void handleInput(Socket clientSocket, String input) {
+		int parsed_input = parseInput(input);
+		if (parsed_input == -1) {
+			return;
+		}
 		float x = 0, y = 0, z = 0;
-		if (Gdx.input.isKeyPressed(KEYBOARD_W)) {
+		switch (parsed_input) {
+		case KEYBOARD_W:
 			z -= translationSpeed;
-		}
-		if (Gdx.input.isKeyPressed(KEYBOARD_S)) {
+			break;
+		case KEYBOARD_S:
 			z += translationSpeed;
-		}
-		if (Gdx.input.isKeyPressed(KEYBOARD_A)) {
+			break;
+		case KEYBOARD_A:
 			x -= translationSpeed;
-		}
-		if (Gdx.input.isKeyPressed(KEYBOARD_D)) {
+			break;
+		case KEYBOARD_D:
 			x += translationSpeed;
-		}
-		if (Gdx.input.isKeyPressed(KEYBOARD_Q)) {
+			break;
+		case KEYBOARD_Q:
 			y -= translationSpeed;
-		}
-		if (Gdx.input.isKeyPressed(KEYBOARD_E)) {
+			break;
+		case KEYBOARD_E:
 			y += translationSpeed;
+			break;
 		}
 		traslation = new Vector3(x, y, z);
 		rotation = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+	}
+	
+	private int parseInput(String input) {
+		switch (input) {
+		case "w":
+			return KEYBOARD_W;
+		case "a":
+			return KEYBOARD_A;
+		case "s":
+			return KEYBOARD_S;
+		case "d":
+			return KEYBOARD_D;
+		}
+		return -1;
 	}
 	
 	@Override

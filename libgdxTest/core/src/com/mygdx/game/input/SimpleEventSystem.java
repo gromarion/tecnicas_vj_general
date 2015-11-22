@@ -1,5 +1,7 @@
 package com.mygdx.game.input;
 
+import java.net.Socket;
+
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -17,8 +19,8 @@ public class SimpleEventSystem implements EventSystem {
 		this.keyboardInputHandler = new TranslationInputHandler(translationSpeed);
 	}
 	
-	public void handleInput() {
-		this.keyboardInputHandler.handleInput();
+	public void handleInput(Socket socket, String input) {
+		this.keyboardInputHandler.handleInput(socket, input);
 		Vector3 position = this.keyboardInputHandler.traslation();
 		Vector2 rotation = this.keyboardInputHandler.rotation();
 		Matrix4 translation = new Matrix4().translate(position.x, position.y, position.z);
