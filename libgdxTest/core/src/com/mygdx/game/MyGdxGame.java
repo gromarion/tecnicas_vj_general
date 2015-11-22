@@ -18,7 +18,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.camera.Camera;
-import com.mygdx.game.camera.OrthographicCamera;
+import com.mygdx.game.camera.PerspectiveCamera;
 import com.mygdx.game.input.EventSystem;
 import com.mygdx.game.input.SimpleEventSystem;
 import com.mygdx.game.light.DirectionalLight;
@@ -66,7 +66,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		dirAnimator = new DirectionalLightAnimator(directionalLight, new Vector3(0, 1, 0), 1);
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
-		cam = new OrthographicCamera(1, h / w);
+		cam = new PerspectiveCamera(67, 1, h / w);
+		//cam = new OrthographicCamera(1, h / w);
 
 		this.eventSystem = new SimpleEventSystem(cam);
 	}
@@ -128,8 +129,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			while (in.ready()) {
 				String input = in.readLine();
 				System.out.println(input);
-				String[] data = input.split(";");
-				eventSystem.handleInput(_clientSocket, data[0]);
+				eventSystem.handleInput(_clientSocket, input);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
