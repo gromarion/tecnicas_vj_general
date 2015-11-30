@@ -4,6 +4,8 @@ uniform vec3 l_direction;
 uniform vec4 specular_color;
 uniform float l_intensity;
 uniform vec4 l_ambient;
+//varying vec4 v_positionLightTrans;
+//uniform int u_depthMap;
 
 // Illumination from right == x = 1.0
 // '' left == x = -1.0
@@ -26,5 +28,11 @@ void main() {
 		specular = clamp(specular, 0.0, 1.0);
 	}
     diffuse = n_dot_l * l_ambient;
+    
+    //vec3 depth = (v_positionLightTrans.xyz / v_positionLightTrans.w)*0.5+0.5;
+	//float len = texture2D(u_depthMap, depth.xy).a;
+	//finalColor.rgb = vec3(1.0-len);
+	//gl_FragColor = finalColor;
+
     gl_FragColor = l_intensity * (diffuse + specular);
 }
