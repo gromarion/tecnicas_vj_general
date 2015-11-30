@@ -13,6 +13,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -55,10 +56,10 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void create() {
-		// handleConnection();
+		handleConnection();
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
-		cameraLight = new OrthographicCamera(10, 10 * h / w);
+		cameraLight = new OrthographicCamera(5,5* h / w);
 		// img = new Texture(Gdx.files.internal("ship.png"));
 		// == When lights are capable of moving, this code should be pasted in
 		// the render() method ==
@@ -69,15 +70,15 @@ public class MyGdxGame extends ApplicationAdapter {
 				.intensity(0.15f);
 		//shaderProgram = new PointLightShaderProgram(pointLight);
 		shaderProgram = new DirectionalLightShaderProgram(directionalLight);
-		// System.out.println(shaderProgram.getLog());
+		System.out.println(shaderProgram.getLog());
 		//meshes.add(new GameObject("teapot", "wt_teapot.obj", new Vector3(0, -0.25f, -100)).mesh());
-		meshes.add(new GameObject("anotherTeapot", "wt_teapot.obj", new Vector3(0, 0, -5)).mesh());
+		meshes.add(new GameObject("standingPlane", "standingPlane.obj", new Vector3(0, 0, 5f)).scale(5).mesh());
+		meshes.add(new GameObject("anotherTeapot", "wt_teapot.obj", new Vector3(0, 0, 1)).scale(6).mesh());
 		meshes.add(new GameObject("plane", "plane.obj", new Vector3(0, -0.25f, 0)).scale(5).mesh());
-		//meshes.add(new GameObject("standingPlane", "standingPlane.obj", new Vector3(0, 0, -10f)).scale(5).mesh());
 		animator = new LightAnimator(pointLight, new Sin(), 0.1f);
 		dirAnimator = new DirectionalLightAnimator(directionalLight, new Vector3(0, 1, 0), 1);
 		cam = new PerspectiveCamera(67, 1, h / w);
-		//cam = new OrthographicCamera(1, h / w);
+		//cam = new OrthographicCamera(5,5* h / w);
 
 		this.eventSystem = new SimpleEventSystem(cam);
 
@@ -87,9 +88,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void render() {
-		// handleSocketInput();
-		// receiveInput();
-		// this.eventSystem.handleInput(clientSocket, );
+		handleSocketInput();
+		receiveInput();
+		//this.eventSystem.handleInput(clientSocket, );
 		Gdx.gl.glClearColor(0.25f, 0.25f, 0.7f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		Gdx.graphics.getGL20().glEnable(GL20.GL_DEPTH_TEST);
@@ -146,7 +147,6 @@ public class MyGdxGame extends ApplicationAdapter {
 			BufferedReader in = new BufferedReader(new InputStreamReader(_clientSocket.getInputStream()));
 			while (in.ready()) {
 				String input = in.readLine();
-				System.out.println(input);
 				eventSystem.handleInput(_clientSocket, input);
 			}
 		} catch (IOException e) {
@@ -163,8 +163,8 @@ public class MyGdxGame extends ApplicationAdapter {
 	private void handleConnection() {
 		try {
 			// _serverSocket = new ServerSocket(9999);
-			Socket clientSocket = new Socket("192.168.1.105", 9999);
-			System.out.println("Conectado con: " + clientSocket.getInetAddress() + ":" + clientSocket.getLocalPort());
+			Socket clientSocket = new Socket("localhost", 9999);
+			System.out.println("(App)Conectado con: " + clientSocket.getInetAddress() + ":" + clientSocket.getLocalPort());
 			_clientSocket = clientSocket;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -185,6 +185,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		lightShaderProgram.setUniformMatrix("u_projViewTrans", cameraLight.getProjectionMatrix());
 		lightShaderProgram.setUniformMatrix("u_worldTrans", cameraLight.getCombinedMatrix());
 		lightShaderProgram.setUniformf("u_lightPosition", cameraLight.getPosition());
+		lightShaderProgram.setUniformf("u_cameraFar", cameraLight.getFar());
 		renderMeshes();
 		
 		ScreenshotFactory.saveScreenshot(frameBuffer.getWidth(), frameBuffer.getHeight(), "depthmap");

@@ -21,7 +21,6 @@ public class Server {
 			while (true) {
 				while (inputStream.ready()) {
 					String input = inputStream.readLine();
-					System.out.print(input);
 					outputStream.write(input + "\n");
 //					Thread.sleep(50);
 					outputStream.flush();
@@ -29,7 +28,6 @@ public class Server {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("ZOMG");
 //		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 //			e.printStackTrace();
