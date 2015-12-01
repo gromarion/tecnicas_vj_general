@@ -17,14 +17,10 @@ public class TranslationInputHandler implements InputHandler {
 	private static final int KEYBOARD_E = Input.Keys.E;
 	private final float translationSpeed;
 	
-	private int lastMousePositionInX;
-	private int lastMousePositionInY;
 	private Vector3 traslation;
 	private Vector2 rotation;
 	
 	public TranslationInputHandler(final float translationSpeed) {
-		lastMousePositionInX = Gdx.input.getX();
-		lastMousePositionInY = Gdx.input.getY();
 		this.translationSpeed = translationSpeed;
 	}
 	
