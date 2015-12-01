@@ -35,6 +35,7 @@ import animator.LightAnimator;
 import animator.Sin;
 import misc.ScreenshotFactory;
 import objects.GameObject;
+import objects.GameObject.ModelType;
 
 public class MyGdxGame extends ApplicationAdapter {
 
@@ -75,11 +76,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		shaderProgram = new SpotLightShaderProgram(spotLight);
 		// System.out.println(shaderProgram.getLog());
 		//meshes.add(new GameObject("teapot", "wt_teapot.obj", new Vector3(0, -0.25f, -100)).mesh());
-		meshes.add(new GameObject("anotherTeapot", "wt_teapot.obj", new Vector3(0, 0, -5)).mesh());
-		meshes.add(new GameObject("plane", "plane.obj", new Vector3(0, -0.25f, 0)).scale(5).mesh());
+		meshes.add(new GameObject("anotherTeapot", "wt_teapot.obj", new Vector3(0, 0, -5), ModelType.OBJ).mesh());
+		meshes.add(new GameObject("plane", "plane.obj", new Vector3(0, -0.25f, 0), ModelType.OBJ).scale(5).mesh());
 		//meshes.add(new GameObject("standingPlane", "standingPlane.obj", new Vector3(0, 0, -10f)).scale(5).mesh());
 		animator = new LightAnimator(pointLight, new Sin(), 0.1f);
-		dirAnimator = new DirectionalLightAnimator(directionalLight, new Vector3(0, 1, 0), 1);
+		//dirAnimator = new DirectionalLightAnimator(directionalLight, new Vector3(0, 1, 0), 1);
 		cam = new PerspectiveCamera(67, 1, h / w);
 		//cam = new OrthographicCamera(1, h / w);
 

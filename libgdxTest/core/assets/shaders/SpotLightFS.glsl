@@ -43,6 +43,8 @@ void main() {
 			specular = pow(n_dot_hv, shinyness) * specular_color;
 			diffuse = n_dot_l * l_ambient;
 			gl_FragColor = l_intensity * (diffuse + specular);
+		} else {
+			gl_FragColor = vec4(0,0,0,1);
 		}
 	    //gl_FragColor = relative_intensity * diffuse;
 	} else {

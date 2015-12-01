@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +13,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.camera.Camera;
@@ -28,10 +25,10 @@ import com.mygdx.game.light.PointLight;
 import com.mygdx.game.shaders.DirectionalLightShaderProgram;
 import com.mygdx.game.shaders.LightShaderProgram;
 
-import animator.DirectionalLightAnimator;
 import animator.LightAnimator;
 import animator.Sin;
 import objects.GameObject;
+import objects.GameObject.ModelType;
 
 public class MyGdxGame extends ApplicationAdapter {
 
@@ -63,8 +60,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		shaderProgram = new DirectionalLightShaderProgram(directionalLight);
 		// System.out.println(shaderProgram.getLog());
 		//meshes.add(new GameObject("teapot", "wt_teapot.obj", new Vector3(0, -0.25f, -100)).mesh());
-		meshes.add(new GameObject("anotherTeapot", "wt_teapot.obj", new Vector3(0, 0, -5)).mesh());
-		meshes.add(new GameObject("plane", "plane.obj", new Vector3(0, -0.25f, 0)).scale(5).mesh());
+		meshes.add(new GameObject("anotherTeapot", "wt_teapot.obj", new Vector3(0, 0, -5), ModelType.G3D).mesh());
+		meshes.add(new GameObject("plane", "plane.obj", new Vector3(0, -0.25f, 0), ModelType.G3D).scale(5).mesh());
 		//meshes.add(new GameObject("standingPlane", "standingPlane.obj", new Vector3(0, 0, -10f)).scale(5).mesh());
 		animator = new LightAnimator(pointLight, new Sin(), 0.1f);
 		cam = new PerspectiveCamera(67, 1, h / w);
