@@ -18,6 +18,6 @@ public class SpotLightShaderProgram extends LightShaderProgram {
 		setUniformf("u_light_cutoffAngle", ((SpotLight) light).cutoffAngle());
 		setUniformf("u_light_position", light.position());
 		setUniform3fv("u_spot_direction", ((SpotLight) light).toArray(), 0, 3);
-		setUniformf("u_light_position", ((SpotLight) light).falloff());
+		//setUniformf("u_light_falloff", ((SpotLight) light).falloff());
 	}
 }

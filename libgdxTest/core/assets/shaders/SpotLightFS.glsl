@@ -9,7 +9,7 @@ uniform vec4 l_ambient;
 uniform vec3 u_light_position;
 uniform vec3 u_spot_direction;
 uniform float u_light_cutoffAngle;
-uniform float u_fallOff;
+//uniform float u_light_falloff;
 
 void main() {
 	float n_dot_l;
@@ -22,6 +22,7 @@ void main() {
 	vec3 light_pos = u_light_position;
 	vec3 normal = normalize(v_normal);
 	float spot_effect;
+	//float attenuation;
 	
 	vec3 aux = light_pos - v_position;
 	dist = length(vec3(light_pos - v_position));
@@ -33,14 +34,14 @@ void main() {
 	if (n_dot_l > 0.0) {
 		spot_effect = dot(normalize(u_spot_direction), normalize(lightDirection));
 		if (spot_effect > u_light_cutoffAngle) {
-			spot_effect = pow(spot_effect, u_fallOff);
-			
+			//spot_effect = pow(spot_effect, u_light_falloff);
+			//attenuation = spot_effect / 2;
 			vec3 L = (light_pos - v_position);
 			vec3 V = (cam_position - v_position);
 			half_vector = normalize(L + V);
 			n_dot_hv = max(dot(v_normal, half_vector), 0.0);
 			specular = pow(n_dot_hv, shinyness) * specular_color;
-			diffuse = n_dot_l * l_ambient;;
+			diffuse = n_dot_l * l_ambient;
 			gl_FragColor = l_intensity * (diffuse + specular);
 		}
 	    //gl_FragColor = relative_intensity * diffuse;
