@@ -21,7 +21,7 @@ import com.mygdx.game.light.DirectionalLight;
 import com.mygdx.game.light.PointLight;
 import com.mygdx.game.light.SpotLight;
 import com.mygdx.game.shaders.LightShaderProgram;
-import com.mygdx.game.shaders.SpotLightShaderProgram;
+import com.mygdx.game.shaders.PointLightShaderProgram;
 
 import objects.GameObject;
 import objects.GameObject.ModelType;
@@ -42,15 +42,24 @@ public class MyGdxGame extends ApplicationAdapter {
 		handleConnection();
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
-		directionalLight = (DirectionalLight) new DirectionalLight(0, 1, -1).color(1, 1, 1).specularColor(1, 1, 1)
+		//x = x
+		//y = profundidad
+		//z = altura
+		directionalLight = (DirectionalLight) new DirectionalLight(0, -1, 1).color(1, 0, 0).specularColor(1, 1, 1)
+				.intensity(1f);
+		pointLight = (PointLight) new PointLight(-5, -0.25f, -3, 10f).color(1, 0, 0).specularColor(1, 1, 1)
 				.intensity(0.5f);
-		pointLight = (PointLight) new PointLight(-5, -0.25f, -3, 10f).color(1, 1, 1).specularColor(1, 1, 1)
-				.intensity(0.15f);
-		spotLight = (SpotLight) new SpotLight(0, 0, -1).color(1, 1, 1).specularColor(1, 1, 1).intensity(0.40f);
-		spotLight.position(0, 10, -5);
-		//shaderProgram = new PointLightShaderProgram(pointLight);
+		
+		//spotlight arriba mirando para abajo		
+		//spotLight = (SpotLight) new SpotLight(0, -1, 0).color(1, 0, 0).specularColor(1, 1, 1).intensity(1f);
+
+		//spotlight apuntando de frente
+		//spotLight = (SpotLight) new SpotLight(0, 0, -1).color(1, 0, 0).specularColor(1, 1, 1).intensity(1f);
+		//spotLight.position(0, 8, -2);
+
+		shaderProgram = new PointLightShaderProgram(pointLight);
 		//shaderProgram = new DirectionalLightShaderProgram(directionalLight);
-		shaderProgram = new SpotLightShaderProgram(spotLight);
+		//shaderProgram = new SpotLightShaderProgram(spotLight);
 		System.out.println(shaderProgram.getLog());
 		//gameObjects.add(new GameObject("wt_teapot.obj"));
 		gameObjects.add(new GameObject("Johnny.g3db", ModelType.G3D));
