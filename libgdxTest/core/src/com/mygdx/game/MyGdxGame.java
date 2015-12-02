@@ -27,8 +27,8 @@ import com.mygdx.game.input.SimpleEventSystem;
 import com.mygdx.game.light.DirectionalLight;
 import com.mygdx.game.light.PointLight;
 import com.mygdx.game.light.SpotLight;
-import com.mygdx.game.shaders.DirectionalLightShaderProgram;
 import com.mygdx.game.shaders.LightShaderProgram;
+import com.mygdx.game.shaders.SpotLightShaderProgram;
 
 import animator.DirectionalLightAnimator;
 import animator.LightAnimator;
@@ -71,9 +71,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		pointLight = (PointLight) new PointLight(-5, -0.25f, -3, 10f).color(1, 1, 1).specularColor(1, 1, 1)
 				.intensity(0.15f);
 		spotLight = (SpotLight) new SpotLight(0, 0, -1).color(1, 1, 1).specularColor(1, 1, 1).intensity(0.40f);
+		spotLight.position(0, 10, -5);
 		//shaderProgram = new PointLightShaderProgram(pointLight);
-		shaderProgram = new DirectionalLightShaderProgram(directionalLight);
-		//shaderProgram = new SpotLightShaderProgram(spotLight);
+		//shaderProgram = new DirectionalLightShaderProgram(directionalLight);
+		shaderProgram = new SpotLightShaderProgram(spotLight);
 		System.out.println(shaderProgram.getLog());
 		//gameObjects.add(new GameObject("wt_teapot.obj"));
 		//meshes.add(new GameObject("anotherTeapot", "wt_teapot.obj", new Vector3(0, 0, -5), ModelType.OBJ).mesh());
