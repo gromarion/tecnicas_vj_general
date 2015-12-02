@@ -114,7 +114,7 @@ public class GameObject {
 			public Renderable obtain() {
 				Renderable renderable = super.obtain();
 				renderable.material = null;
-				renderable.mesh = null;
+				renderable.meshPart.mesh = null;
 				renderable.shader = null;
 				return renderable;
 			}
@@ -136,8 +136,8 @@ public class GameObject {
 
 			shaderProgram.setUniformMatrix4fv("u_bones", floats, 0,
 					floats.length);
-			render.mesh.render(shaderProgram, render.primitiveType,
-					render.meshPartOffset, render.meshPartSize);
+			render.meshPart.mesh.render(shaderProgram, render.meshPart.primitiveType,
+					render.meshPart.offset, render.meshPart.size);
 		}
 	}
 	

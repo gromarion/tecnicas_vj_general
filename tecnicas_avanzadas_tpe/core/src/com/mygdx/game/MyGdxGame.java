@@ -13,7 +13,6 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -78,7 +77,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		//gameObjects.add(new GameObject("wt_teapot.obj"));
 		//meshes.add(new GameObject("anotherTeapot", "wt_teapot.obj", new Vector3(0, 0, -5), ModelType.OBJ).mesh());
 		//meshes.add(new GameObject("anotherTeapot", "Johnny.g3db", new Vector3(0, 0, -5), ModelType.G3D).mesh());
-		GameObject dave = new GameObject("Johnny.g3db", ModelType.G3D);
+		GameObject dave = new GameObject("Dave.g3db", ModelType.G3D);
 		dave.transform(new Matrix4());
 		gameObjects.add(dave);
 		//gameObjects.add(new GameObject("plane.obj", ModelType.OBJ));
@@ -177,7 +176,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	private void handleConnection() {
 		try {
 			// _serverSocket = new ServerSocket(9999);
-			Socket clientSocket = new Socket("localhost", 9991);
+			Socket clientSocket = new Socket("localhost", 9999);
 			System.out.println("Conectado con: " + clientSocket.getInetAddress() + ":" + clientSocket.getLocalPort());
 			_clientSocket = clientSocket;
 		} catch (IOException e) {

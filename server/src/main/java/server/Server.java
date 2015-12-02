@@ -9,7 +9,7 @@ import java.net.Socket;
 
 public class Server {
 
-	private static final int port = 9991;
+	private static final int port = 9999;
 
 	public Server() {
 		try {
@@ -28,15 +28,10 @@ public class Server {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("ZOMG");
-//		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
 		}
 	}
 
 	public static void main(String[] args) {
 		new Server();
 	}
-
 }
