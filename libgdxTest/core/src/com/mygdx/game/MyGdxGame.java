@@ -75,11 +75,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		shaderProgram = new DirectionalLightShaderProgram(directionalLight);
 		//shaderProgram = new SpotLightShaderProgram(spotLight);
 		System.out.println(shaderProgram.getLog());
-		//meshes.add(new GameObject("teapot", "wt_teapot.obj", new Vector3(0, -0.25f, -100)).mesh());
+		//gameObjects.add(new GameObject("wt_teapot.obj"));
 		//meshes.add(new GameObject("anotherTeapot", "wt_teapot.obj", new Vector3(0, 0, -5), ModelType.OBJ).mesh());
 		//meshes.add(new GameObject("anotherTeapot", "Johnny.g3db", new Vector3(0, 0, -5), ModelType.G3D).mesh());
 		GameObject dave = new GameObject("Johnny.g3db", ModelType.G3D);
-		dave.transform(new Matrix4().scale(0.1f, 0.1f, 0.1f));
+		dave.transform(new Matrix4());
 		gameObjects.add(dave);
 		//gameObjects.add(new GameObject("plane.obj", ModelType.OBJ));
 		//meshes.add(new GameObject("standingPlane", "standingPlane.obj", new Vector3(0, 0, -10f)).scale(5).mesh());

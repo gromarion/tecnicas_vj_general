@@ -37,10 +37,7 @@ void main()
     
     vec4 pos = skinning * a_position;
     v_position = u_modelMatrix * pos;
-    v_normal = normalize((u_modelMatrix * vec4(a_normal, 0.0)).xyz);
 
     gl_Position = u_worldView * v_position;
-
-    //gl_Position = u_worldView * a_position;
-    //v_normal = normalize((u_worldView * vec4(a_normal, 0.0)).xyz);
+    v_normal = normalize((u_worldView * vec4(a_normal, 0.0)).xyz);
 }
