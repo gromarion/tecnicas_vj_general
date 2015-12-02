@@ -4,7 +4,7 @@ uniform vec3 l_direction;
 uniform vec4 specular_color;
 uniform float l_intensity;
 uniform vec4 l_ambient;
-//varying vec4 v_positionLightTrans;
+varying vec4 v_position;
 //uniform int u_depthMap;
 
 // Illumination from right == x = 1.0
@@ -22,7 +22,7 @@ void main() {
 	
 	n_dot_l = max(dot(v_normal, light_dir), 0.0);
 	if (n_dot_l > 0.0) {
-		half_vector = normalize(light_dir + gl_FragCoord.xyz);
+		half_vector = normalize(light_dir + v_position.xyz);
 		n_dot_hv = max(dot(v_normal, half_vector), 0.0);
 		specular = pow(n_dot_hv, shinyness) * specular_color;
 		specular = clamp(specular, 0.0, 1.0);

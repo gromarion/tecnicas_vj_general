@@ -9,7 +9,7 @@ import java.net.Socket;
 
 public class Server {
 
-	private static final int port = 9999;
+	private static final int port = 9991;
 
 	public Server() {
 		try {

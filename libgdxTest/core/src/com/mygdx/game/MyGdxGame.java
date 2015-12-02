@@ -13,11 +13,11 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.camera.Camera;
 import com.mygdx.game.camera.OrthographicCamera;
@@ -27,8 +27,8 @@ import com.mygdx.game.input.SimpleEventSystem;
 import com.mygdx.game.light.DirectionalLight;
 import com.mygdx.game.light.PointLight;
 import com.mygdx.game.light.SpotLight;
+import com.mygdx.game.shaders.DirectionalLightShaderProgram;
 import com.mygdx.game.shaders.LightShaderProgram;
-import com.mygdx.game.shaders.SpotLightShaderProgram;
 
 import animator.DirectionalLightAnimator;
 import animator.LightAnimator;
@@ -47,7 +47,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	private DirectionalLight directionalLight;
 	private PointLight pointLight;
 	private SpotLight spotLight;
-	private List<Mesh> meshes = new ArrayList<Mesh>();
+	private List<GameObject> gameObjects = new ArrayList<GameObject>();
 	private LightAnimator animator;
 	private DirectionalLightAnimator dirAnimator;
 	private Socket _clientSocket;
@@ -65,20 +65,23 @@ public class MyGdxGame extends ApplicationAdapter {
 		// img = new Texture(Gdx.files.internal("ship.png"));
 		// == When lights are capable of moving, this code should be pasted in
 		// the render() method ==
-		directionalLight = (DirectionalLight) new DirectionalLight(0, 0, -1).color(1, 1, 1).specularColor(1, 1, 1)
+		directionalLight = (DirectionalLight) new DirectionalLight(0, 1, -1).color(1, 1, 1).specularColor(1, 1, 1)
 				.intensity(0.5f);
 		cameraLight.position(directionalLight.position().x, directionalLight.position().y, directionalLight.position().z);
 		pointLight = (PointLight) new PointLight(-5, -0.25f, -3, 10f).color(1, 1, 1).specularColor(1, 1, 1)
 				.intensity(0.15f);
 		spotLight = (SpotLight) new SpotLight(0, 0, -1).color(1, 1, 1).specularColor(1, 1, 1).intensity(0.40f);
 		//shaderProgram = new PointLightShaderProgram(pointLight);
-		//shaderProgram = new DirectionalLightShaderProgram(directionalLight);
-		shaderProgram = new SpotLightShaderProgram(spotLight);
-		// System.out.println(shaderProgram.getLog());
+		shaderProgram = new DirectionalLightShaderProgram(directionalLight);
+		//shaderProgram = new SpotLightShaderProgram(spotLight);
+		System.out.println(shaderProgram.getLog());
 		//meshes.add(new GameObject("teapot", "wt_teapot.obj", new Vector3(0, -0.25f, -100)).mesh());
 		//meshes.add(new GameObject("anotherTeapot", "wt_teapot.obj", new Vector3(0, 0, -5), ModelType.OBJ).mesh());
-		meshes.add(new GameObject("anotherTeapot", "Dave.g3db", new Vector3(0, 0, -5), ModelType.G3D).mesh());
-		meshes.add(new GameObject("plane", "plane.obj", new Vector3(0, -0.25f, 0), ModelType.OBJ).scale(5).mesh());
+		//meshes.add(new GameObject("anotherTeapot", "Johnny.g3db", new Vector3(0, 0, -5), ModelType.G3D).mesh());
+		GameObject dave = new GameObject("Johnny.g3db", ModelType.G3D);
+		dave.transform(new Matrix4().scale(0.1f, 0.1f, 0.1f));
+		gameObjects.add(dave);
+		//gameObjects.add(new GameObject("plane.obj", ModelType.OBJ));
 		//meshes.add(new GameObject("standingPlane", "standingPlane.obj", new Vector3(0, 0, -10f)).scale(5).mesh());
 		animator = new LightAnimator(pointLight, new Sin(), 0.1f);
 		//dirAnimator = new DirectionalLightAnimator(directionalLight, new Vector3(0, 1, 0), 1);
@@ -166,15 +169,15 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	private void renderMeshes() {
-		for (Mesh mesh : meshes) {
-			mesh.render(shaderProgram, GL20.GL_TRIANGLES);
+		for (GameObject gameObject : gameObjects) {
+			gameObject.render(shaderProgram);
 		}
 	}
 
 	private void handleConnection() {
 		try {
 			// _serverSocket = new ServerSocket(9999);
-			Socket clientSocket = new Socket("localhost", 9999);
+			Socket clientSocket = new Socket("localhost", 9991);
 			System.out.println("Conectado con: " + clientSocket.getInetAddress() + ":" + clientSocket.getLocalPort());
 			_clientSocket = clientSocket;
 		} catch (IOException e) {
